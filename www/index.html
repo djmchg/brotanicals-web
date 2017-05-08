@@ -21,7 +21,7 @@
       console.log("Onsen UI is ready!");
     });
 
-    document.addEventListener('show', function(event) {
+    document.addEventListener('init', function(event) {
       var page = event.target;
       var titleElement = document.querySelector('#toolbar-title');
 
@@ -51,11 +51,16 @@
         });
       } else if (page.matches('#graph-page')) {
         titleElement.innerHTML = 'Brotanicals - Graph';
-        new Chartist.Line('#chart1', {
-          labels: [1, 2, 3, 4],
-          series: [[100, 120, 180, 200]]
-        });
-      }
+        }
+    });
+    document.addEventListener('show', function(event) {
+      var page = event.target;
+        if (page.matches('#graph-page')){
+          new Chartist.Line('#chart1', {
+            labels: [1, 2, 3, 4],
+            series: [[100, 120, 180, 200]]
+          });
+        }
     });
   </script>
 </head>
@@ -82,7 +87,7 @@
 
   <ons-template id="graph.html">
     <ons-page id="graph-page">
-      <div class="ct-chart ct-golden-section" id="chart1"></div>
+      <div class="ct-chart ct-golden-slice" id="chart1"></div>
     </ons-page>
   </ons-template>
 </body>
