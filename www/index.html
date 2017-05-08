@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <script src="js/justgage.js"></script>
+  <script src="js/raphael-2.1.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+
+  <script>
+    ons.ready(function() {
+      console.log("Onsen UI is ready!");
+    });
+
+    document.addEventListener('show', function(event) {
+      var page = event.target;
+      var titleElement = document.querySelector('#toolbar-title');
+
+      if (page.matches('#gauges')) {
+        titleElement.innerHTML = 'Brotanicals - Gauges';
+        //Generate gauges
+        var g = new JustGage({
+          id: "temp",
+          value: 67,
+          min: 0,
+          max: 100,
+          title: "Temperature in F"
+        });
+        var g = new JustGage({
+          id: "humidity",
+          value: 85,
+          min: 0,
+          max: 100,
+          title: "Relative Humidity %"
+        });
+        var g = new JustGage({
+          id: "moisture",
+          value: 30,
+          min: 0,
+          max: 100,
+          title: "Soil Moisture %"
+        });
+      } else if (page.matches('#graph-page')) {
+        titleElement.innerHTML = 'Brotanicals - Graph';
+        new Chartist.Line('#chart1', {
+          labels: [1, 2, 3, 4],
+          series: [[100, 120, 180, 200]]
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <ons-page>
+    <ons-toolbar>
+      <div class="center" id="toolbar-title"></div>
+    </ons-toolbar>
+    <ons-tabbar position="auto">
+      <ons-tab label="Gauges" page="gauges.html" active>
+      </ons-tab>
+      <ons-tab label="Graph" page="graph.html">
+      </ons-tab>
+    </ons-tabbar>
+  </ons-page>
+
+  <ons-template id="gauges.html">
+    <ons-page id="gauges">
+      <div id="temp" class="120x180px"></div>
+      <div id="humidity" class="120x180px"></div>
+      <div id="moisture" class="120x180px"></div>
+    </ons-page>
+  </ons-template>
+
+  <ons-template id="graph.html">
+    <ons-page id="graph-page">
+      <div class="ct-chart ct-golden-section" id="chart1"></div>
+    </ons-page>
+  </ons-template>
+</body>
+</html>
